@@ -8,8 +8,9 @@
 
 	%body
 		-if user_signed_in?
-			= current_user.first_name
-			= link_to "Job Applications", user_job_applications_path(current_user)
+			%p
+				= link_to "Job Applications", user_job_applications_path(current_user)
+				= current_user.email
 		-else
 			= link_to "Join", new_user_registration_path 
 			= link_to "Login", new_user_session_path 
