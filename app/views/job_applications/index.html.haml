@@ -1,11 +1,25 @@
-%h1
-	= current_user.email
-%h1 all my applications
-- @job_applications.all.each do |application|
-	%h4
-		= link_to application.company_name, edit_user_job_application_path(application.user, application)
-	= link_to "Delete", [application.user, application],
-		method: :delete,
-		data: {confirm: 'Are you sure you want to permanently delete?'}
+
+%h1 All my applications
+
+%table
+	%tr
+		%th
+			Company Name
+		%th
+			Job Title
+		%th
+
+	- @job_applications.all.each do |application|
+		%tr
+			%td
+				= link_to application.company_name, edit_user_job_application_path(application.user, application)
+			%td
+				= application.job_title
+			%td
+				= link_to "Delete", [application.user, application],
+					method: :delete,
+					data: {confirm: 'Are you sure you want to permanently delete?'}
+
+
 %br
 = link_to "New job application", new_user_job_application_path

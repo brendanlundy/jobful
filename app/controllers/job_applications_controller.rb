@@ -1,6 +1,6 @@
 class JobApplicationsController < ApplicationController
 	def index
-		@job_applications = JobApplication.all
+		@job_applications = JobApplication.order('job_applications.company_name ASC').all
 	end
 
 	def show
@@ -13,6 +13,7 @@ class JobApplicationsController < ApplicationController
 	end
  
   def edit
+  	@user = User.find(params[:user_id])
     @job_application = JobApplication.find(params[:id])
   end
 
@@ -22,13 +23,20 @@ class JobApplicationsController < ApplicationController
 
 		if @job_application.save
 			redirect_to user_job_application_path(@user, @job_application)
-			#user_job_applications_path
 		else
 			render 'new'
 		end
 	end
 
 	def update
+		@user = User.find(params[:user_id])
+		@job_application = JobApplication.find(params[:id])
+
+		if @job_application.update(job_application_params)
+			redirect_to user_job_applications_path
+		else
+			render 'edit'
+		end
 	end
 
 	def destroy
@@ -40,7 +48,7 @@ class JobApplicationsController < ApplicationController
 
 	private
 		def job_application_params
-			params.require(:job_application).permit(:company_name, :job_title)
+			params.require(:job_application).permit(:company_name, :job_title, :job_link, :interest_level, :submit_date, :job_description, :notes, :city, :state)
 		end
 
 end

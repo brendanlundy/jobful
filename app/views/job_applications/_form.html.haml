@@ -1,0 +1,48 @@
+= form_for([@user, @job_application]) do |f|
+  - if @job_application.errors.any?
+    %div{:id => "error_explanation"}
+      %h2
+        = pluralize(@job_application.errors.count, "error")
+        prohibited this job application from being saved:
+      %ul
+        - @job_application.errors.full_messages.each do |msg|
+          %li
+            = msg
+
+  %p
+    = f.label :company_name
+    = f.text_field :company_name
+ 
+  %p
+    = f.label :job_title
+    = f.text_field :job_title
+
+  %p
+    = f.label :job_link
+    = f.url_field :job_link
+
+  %p
+    = f.label :submit_date
+    = f.date_field :submit_date
+
+  %p
+    = f.label :job_description
+    = f.text_area :job_description
+  %p
+    = f.label :notes
+    = f.text_area :notes
+
+  %p
+    = f.label :city
+    = f.text_field :city
+
+  %p
+    = f.label :state
+    = f.text_field :state
+
+  %p
+    = f.label :interest_level
+    = f.number_field :interest_level
+ 
+  %p
+    = f.submit
