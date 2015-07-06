@@ -8,6 +8,11 @@
 		%th
 			Job Title
 		%th
+			Application Date
+		%th
+			Application Status
+		%th
+		%th
 
 	- @job_applications.all.each do |application|
 		%tr
@@ -15,6 +20,12 @@
 				= link_to application.company_name, edit_user_job_application_path(application.user, application)
 			%td
 				= application.job_title
+			%td
+				= application.submit_date
+			%td
+				= application.application_status
+			%td
+				= application.is_archived
 			%td
 				= link_to "Delete", [application.user, application],
 					method: :delete,
