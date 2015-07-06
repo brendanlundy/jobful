@@ -43,6 +43,10 @@
   %p
     = f.label :interest_level
     = f.number_field :interest_level
- 
+
+  %p
+    = f.label :application_status
+    = f.select :application_status, options_for_select([ 'Will Apply', 'Applied', 'Interview', 'Offer', 'Rejected' ], @job_application.application_status || 'Applied')
+
   %p
     = f.submit

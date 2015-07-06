@@ -1,6 +1,6 @@
 class JobApplicationsController < ApplicationController
 	def index
-		@job_applications = JobApplication.order('job_applications.company_name ASC').all
+		@job_applications = JobApplication.order('job_applications.submit_date DESC').all
 	end
 
 	def show
@@ -9,7 +9,7 @@ class JobApplicationsController < ApplicationController
  
 	def new
 		@user = User.find(params[:user_id])
-		@job_application = JobApplication.new
+		@job_application = JobApplication.new({submit_date: Date.today})
 	end
  
   def edit
@@ -48,7 +48,7 @@ class JobApplicationsController < ApplicationController
 
 	private
 		def job_application_params
-			params.require(:job_application).permit(:company_name, :job_title, :job_link, :interest_level, :submit_date, :job_description, :notes, :city, :state)
+			params.require(:job_application).permit(:company_name, :job_title, :job_link, :interest_level, :submit_date, :job_description, :notes, :city, :state, :application_status, :is_archived)
 		end
 
 end

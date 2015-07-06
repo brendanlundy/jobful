@@ -11,15 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150704152608) do
+ActiveRecord::Schema.define(version: 20150705214702) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "job_application_statuses", force: :cascade do |t|
+    t.string "status_name", null: false
+  end
+
   create_table "job_applications", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "company_name",    null: false
-    t.string   "job_title",       null: false
+    t.string   "company_name",                       null: false
+    t.string   "job_title",                          null: false
     t.string   "job_link"
     t.integer  "interest_level"
     t.datetime "submit_date"
@@ -27,8 +31,10 @@ ActiveRecord::Schema.define(version: 20150704152608) do
     t.text     "notes"
     t.string   "city"
     t.string   "state"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.string   "application_status"
+    t.boolean  "is_archived",        default: false
   end
 
   add_index "job_applications", ["user_id"], name: "index_job_applications_on_user_id", using: :btree
