@@ -7,7 +7,11 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   resources :users do
-    resources :job_applications
+    resources :job_applications do
+      member do
+        put 'archive'
+      end
+    end
   end
 
   # Example of regular route:

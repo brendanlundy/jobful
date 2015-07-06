@@ -1,5 +1,13 @@
+- if params[:archive_page] == 'true'
+	-	archive_page = true
+-	else
+	- archive_page = false
 
-%h1 All my applications
+%h1 
+	- if archive_page
+		Archived applications
+	- else
+		Current applications
 
 %table
 	%tr
@@ -14,7 +22,7 @@
 		%th
 		%th
 
-	- @job_applications.all.each do |application|
+	- @job_applications.all.select{ |appl| (archive_page && appl.is_archived) || (!archive_page && !appl.is_archived) }.each do |application|
 		%tr
 			%td
 				= link_to application.company_name, edit_user_job_application_path(application.user, application)
@@ -25,7 +33,8 @@
 			%td
 				= application.application_status
 			%td
-				= application.is_archived
+				= link_to "#{archive_page ? 'Unarchive' : 'Archive'}", archive_user_job_application_path(application.user, application),
+					method: :put
 			%td
 				= link_to "Delete", [application.user, application],
 					method: :delete,
@@ -34,3 +43,9 @@
 
 %br
 = link_to "New job application", new_user_job_application_path
+%br
+- if archive_page
+	= link_to "Current applications", user_job_applications_path
+- else
+	= link_to "Archived applications", user_job_applications_path({archive_page: true})
+

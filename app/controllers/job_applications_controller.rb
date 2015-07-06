@@ -42,8 +42,35 @@ class JobApplicationsController < ApplicationController
 	def destroy
 		@user = User.find(params[:user_id])
     @job_application = @user.job_applications.find(params[:id])
+    if @job_application.is_archived
+    	archive_page = true
+    else
+    	archive_page = false
+    end
+
     @job_application.destroy
-    redirect_to user_job_applications_path
+    if archive_page
+    	redirect_to user_job_applications_path({archive_page: true})
+    else
+    	redirect_to user_job_applications_path
+    end
+	end
+
+
+	def archive
+		@job_application = JobApplication.find(params[:id])
+		if @job_application.is_archived
+    	archive_page = true
+    else
+    	archive_page = false
+    end
+    
+  	@job_application.update_attributes({is_archived: !@job_application.is_archived})
+  	if archive_page
+    	redirect_to user_job_applications_path({archive_page: true})
+    else
+    	redirect_to user_job_applications_path
+    end
 	end
 
 	private
