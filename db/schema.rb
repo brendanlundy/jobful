@@ -11,10 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150705214702) do
+ActiveRecord::Schema.define(version: 20150708013701) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "event_types", force: :cascade do |t|
+    t.string "name", null: false
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.integer  "job_application_id", null: false
+    t.integer  "event_type_id",      null: false
+    t.datetime "event_time"
+    t.text     "pre_notes"
+    t.text     "post_notes"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "events", ["job_application_id"], name: "index_events_on_job_application_id", using: :btree
 
   create_table "job_application_statuses", force: :cascade do |t|
     t.string "status_name", null: false
@@ -59,5 +75,7 @@ ActiveRecord::Schema.define(version: 20150705214702) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "events", "event_types"
+  add_foreign_key "events", "job_applications"
   add_foreign_key "job_applications", "users"
 end

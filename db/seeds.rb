@@ -5,3 +5,9 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+# EventType.delete_all
+# EventType.create(name: 'Phone')
+# EventType.create(name: 'On site')
+# EventType.create(name: 'Test')
+# EventType.create(name: 'Project')
