@@ -12,7 +12,8 @@ class JobApplication < ActiveRecord::Base
 
 	before_validation :check_case
 
-  def check_case
-    self.state.upcase!
-  end
+	private
+	  def check_case
+	    self.state.upcase!
+	  end
 end

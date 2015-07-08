@@ -1,5 +1,51 @@
 
 %h1 Edit page
 
+= render 'form'
 
-=render 'form'
+%h2 Events
+- @job_application.events.each do |event|
+  %p
+    %strong Type:
+    = event.event_type.name
+
+  %p
+    %strong Time:
+    = event.event_time
+
+  %p
+    %strong Pre notes:
+    = event.pre_notes
+
+  %p
+    %strong Post notes:
+    = event.post_notes
+
+  %p
+    = link_to "Delete", [event.job_application, event],
+          method: :delete,
+          data: {confirm: 'Are you sure you want to permanently delete?'}
+
+
+%h2 Add an event
+= form_for([@job_application, @job_application.events.build]) do |f|
+  %p
+    = f.label :event_type_id
+    %br
+    = f.select :event_type_id, options_for_select(EventType.all.map{|s|[s.name, s.id]})
+
+  %p
+    = f.label :event_time
+    %br
+    = f.date_field :event_time
+
+  %p
+    = f.label :pre_notes
+    = f.text_area :pre_notes
+
+  %p
+    = f.label :post_notes
+    = f.text_area :post_notes
+
+  %p
+    = f.submit 'Add event'

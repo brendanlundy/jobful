@@ -14,6 +14,10 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :job_applications do
+    resources :events
+  end
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
