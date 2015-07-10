@@ -8,14 +8,14 @@ class EventsController < ApplicationController
   end
  
 	def new
-		@user = User.find(params[:user_id])
 		@job_application = JobApplication.find(params[:job_application_id])
+    @user = @job_application.user
 		@event = Event.new()
 	end
  
   def edit
-  	@user = User.find(params[:user_id])
     @job_application = JobApplication.find(params[:job_application_id])
+    @user = @job_application.user
     @event = Event.find(params[:id])
   end
 
@@ -32,12 +32,12 @@ class EventsController < ApplicationController
 	end
 
 	def update
-		@user = User.find(params[:user_id])
 		@job_application = JobApplication.find(params[:job_application_id])
+    @user = @job_application.user
 		@event = Event.find(params[:id])
 
 		if @event.update(event_params)
-			redirect_to user_job_applications_path
+			redirect_to edit_user_job_application_path(@user, @job_application)
 		else
 			render 'edit'
 		end

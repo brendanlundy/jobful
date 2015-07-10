@@ -1,0 +1,22 @@
+
+= form_for([@job_application, @event]) do |f|
+  %p
+    = f.label :event_type_id
+    %br
+    = f.select :event_type_id, options_for_select(EventType.all.map{|s|[s.name, s.id]})
+
+  %p
+    = f.label :event_time
+    %br
+    = f.date_field :event_time
+
+  %p
+    = f.label :pre_notes
+    = f.text_area :pre_notes
+
+  %p
+    = f.label :post_notes
+    = f.text_area :post_notes
+
+  %p
+    = f.submit

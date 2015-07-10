@@ -15,6 +15,7 @@ class JobApplicationsController < ApplicationController
   def edit
   	@user = User.find(params[:user_id])
     @job_application = JobApplication.find(params[:id])
+    @event = Event.new()
   end
 
 	def create
