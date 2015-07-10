@@ -1,0 +1,9 @@
+.join {
+  background-color:black;
+  color: white;
+  position: absolute;
+  bottom: 30%;
+  left: 48%;
+  padding: 10px;
+  border-radius: 10px;
+}
