@@ -1,0 +1,53 @@
+- if params[:archive_page] == 'true'
+  - archive_page = true
+- else
+  - archive_page = false
+
+%h1
+  - if archive_page
+    Archived applications
+  - else
+    Current applications
+    = link_to "+", new_user_job_application_path
+
+%table
+  %tr
+    %th
+      Company
+    %th
+      Job Title
+    %th
+      Submit Date
+    %th
+      Status
+    %th
+      Location
+    %th
+    %th
+
+  - @job_applications.all.select{ |appl| (archive_page && appl.is_archived) || (!archive_page && !appl.is_archived) }.each do |application|
+    %tr
+      %td
+        = link_to application.company_name, edit_user_job_application_path(application.user, application)
+      %td
+        = application.job_title
+      %td
+        = application.submit_date.strftime("%m/%d/%Y")
+      %td
+        = application.application_status
+      %td
+        = "#{application.city} #{application.state}"
+      %td
+        = link_to "#{archive_page ? 'Unarchive' : 'Archive'}", archive_user_job_application_path(application.user, application),
+          method: :put
+      %td
+        = link_to "Delete", [application.user, application],
+          method: :delete,
+          data: {confirm: 'Are you sure you want to permanently delete?'}
+
+%br
+- if archive_page
+  = link_to "Current applications", user_job_applications_path
+- else
+  = link_to "Archived applications", user_job_applications_path({archive_page: true})
+
